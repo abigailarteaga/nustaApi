@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const { literal } = require('sequelize');
 const Ubicacion = require('../models/ubicacion');
@@ -53,9 +54,11 @@ async function crear(req, res) {
             `📍 https://maps.google.com/?q=${latitud},${longitud}\n` +
             `📞 Contactos:\n📞 ${contactosTexto}`;
 
-        // Enviar a Telegram
         const token = process.env.TELEGRAM_BOT_TOKEN;
         const chatId = process.env.TELEGRAM_CHAT_ID;
+
+        console.log("Token:", token);
+console.log("Chat ID:", chatId);
 
         if (!token || !chatId) {
             return res.status(500).json({ error: "Error: Configuración de Telegram no encontrada." });
