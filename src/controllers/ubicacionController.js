@@ -27,6 +27,7 @@ async function crear(req, res) {
     try {
         // Buscar usuario
         const usuario = await Usuario.findOne({ where: { USR_CRR: correo.trim().toLowerCase() } });
+        console.log("Usuario encontrado:", usuario);
 
         const fechaHoraSQL = getFechaHoraSQL();
 
@@ -47,7 +48,11 @@ async function crear(req, res) {
             : "Sin contactos registrados";
 
         // Nombre del usuario o genérico
-        const nombre = usuario ? usuario.USR_NOMBRE + (usuario.USR_APELLIDO ? ' ' + usuario.USR_APELLIDO : '') : "Una mujer";
+        //const nombre = usuario ? usuario.USR_NOMBRE + (usuario.USR_APELLIDO ? ' ' + usuario.USR_APELLIDO : '') : "Una mujer";
+
+        const nombre = usuario && usuario.USR_NMBR
+        ? `${usuario.USR_NMBR ?? ''} ${usuario.USR_APLLD ?? ''}`.trim()
+        : "Una mujer";
 
         // Mensaje para Telegram
         const mensaje = `🚨 ${nombre} necesita ayuda\n` +
@@ -58,7 +63,7 @@ async function crear(req, res) {
         const chatId = process.env.TELEGRAM_CHAT_ID;
 
         console.log("Token:", token);
-console.log("Chat ID:", chatId);
+        console.log("Chat ID:", chatId);
 
         if (!token || !chatId) {
             return res.status(500).json({ error: "Error: Configuración de Telegram no encontrada." });
