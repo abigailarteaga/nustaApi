@@ -34,7 +34,7 @@ async function crear(req, res) {
         await Ubicacion.create({
             UBI_LATI: latitud,
             UBI_LONGI: longitud,
-            UBI_FECHAHORA: literal('GETDATE()'),
+            UBI_FECHAHORA: fechaHoraSQL,
             UBI_ORIGEN: "APP"
         });
 

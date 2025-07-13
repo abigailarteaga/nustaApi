@@ -1,22 +1,21 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('db21011', 'db21011', '2x?ZdP5=F+k9', {
-    host: 'db21011.public.databaseasp.net',
-    dialect: 'mssql',
+const sequelize = new Sequelize('BtnAuxilio', 'kawsay', 'zdp(77-2AsHX', {
+    host: '46.202.177.158',
+    port: 3306,
+    dialect: 'mysql',
+    logging: false, // puedes poner true para ver las consultas en consola
     dialectOptions: {
-        options: {
-            encrypt: true,
-            trustServerCertificate: true,
-        },
-    },
+        ssl: false, // si usas SSL en tu host, cambia esto a true y configura el certificado
+    }
 });
 
 const testConnection = async () => {
     try {
         await sequelize.authenticate();
-        console.log('Connection to the database has been established successfully.');
+        console.log('Conexión a la base de datos MySQL establecida correctamente.');
     } catch (error) {
-        console.error('Unable to connect to the database:', error);
+        console.error('No se pudo conectar a la base de datos:', error);
     }
 };
 
