@@ -53,6 +53,33 @@ async function eliminarUsuario(req, res) {
     } catch (error) {
         return res.status(500).json({ error: "Error al eliminar usuario", detalle: error.message });
     }
+
+}
+
+async function editarUsuario(req, res) {
+    const { correo } = req.params;
+    const { nuevoCorreo, edad, peso, altura } = req.body;
+
+    try {
+        // Verifica si el usuario existe
+        const usuario = await Usuario.findOne({ where: { USR_CRR: correo } });
+
+        if (!usuario) {
+            return res.status(404).json({ mensaje: `Usuario con correo ${correo} no encontrado` });
+        }
+
+        // Actualiza los campos permitidos
+        usuario.USR_CRR = nuevoCorreo || usuario.USR_CRR;
+        usuario.USR_EDAD = edad ?? usuario.USR_EDAD;
+        usuario.USR_PESO = peso ?? usuario.USR_PESO;
+        usuario.USR_ALT = altura ?? usuario.USR_ALT;
+
+        await usuario.save();
+
+        return res.json({ mensaje: "Usuario actualizado correctamente", usuario });
+    } catch (error) {
+        return res.status(500).json({ error: "Error al editar usuario", detalle: error.message });
+    }
 }
 
 
@@ -60,5 +87,6 @@ module.exports = {
     getUsuarios,
     crearUsuario,
     getUsuario,
-    eliminarUsuario
+    eliminarUsuario,
+    editarUsuario
 };
