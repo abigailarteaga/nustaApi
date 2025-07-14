@@ -44,4 +44,6 @@ router.post('/', ContactoEmergenciaController.crear);
  */
 router.get('/', ContactoEmergenciaController.obtenerPorCorreo);
 
+router.delete('/', ContactoEmergenciaController.eliminar);
+
 module.exports = router;
