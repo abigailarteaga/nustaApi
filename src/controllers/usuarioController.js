@@ -1,5 +1,8 @@
 const express = require('express');
 const Usuario = require('../models/usuario');
+const { enviarCodigoVerificacion } = require('../services/correoService');
+const codigosPendientes = {}; 
+
 
 async function getUsuarios(req, res) {
     try {
@@ -54,11 +57,41 @@ async function eliminarUsuario(req, res) {
         return res.status(500).json({ error: "Error al eliminar usuario", detalle: error.message });
     }
 }
+async function solicitarCodigo(req, res) {
+  const { correo } = req.body;
+  if (!correo) return res.status(400).json({ mensaje: "Falta el correo" });
+
+  const codigo = Math.floor(100000 + Math.random() * 900000); // 6 dígitos
+  codigosPendientes[correo] = codigo;
+
+  try {
+    await enviarCodigoVerificacion(correo, codigo);
+    return res.json({ mensaje: "Código enviado con éxito" });
+  } catch (error) {
+    return res.status(500).json({ error: "Error al enviar correo", detalle: error.message });
+  }
+}
+
+async function verificarCodigo(req, res) {
+  const { correo, codigo } = req.body;
+  if (!correo || !codigo) {
+    return res.status(400).json({ mensaje: "Correo y código requeridos" });
+  }
+
+  if (parseInt(codigo) === codigosPendientes[correo]) {
+    delete codigosPendientes[correo];
+    return res.json({ verificado: true });
+  }
+
+  return res.json({ verificado: false, mensaje: "Código incorrecto" });
+}
 
 
 module.exports = {
-    getUsuarios,
-    crearUsuario,
-    getUsuario,
-    eliminarUsuario
+  getUsuarios,
+  crearUsuario,
+  getUsuario,
+  eliminarUsuario,
+  solicitarCodigo,
+  verificarCodigo,
 };
