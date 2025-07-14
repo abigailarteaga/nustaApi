@@ -85,6 +85,8 @@ router.get('/:correo', usuarioController.getUsuario);
  *         description: Usuario no encontrado
  */
 router.delete('/:correo', usuarioController.eliminarUsuario);
+router.put('/:correo', usuarioController.editarUsuario);
+
 
 /**
  * @swagger
