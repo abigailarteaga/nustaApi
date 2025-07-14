@@ -26,5 +26,6 @@ router.post('/', usuarioController.crearUsuario);
 
 // GET: api/usuario/:correo
 router.get('/:correo', usuarioController.getUsuario);
+router.delete('/:correo', usuarioController.eliminarUsuario);
 
 module.exports = router;

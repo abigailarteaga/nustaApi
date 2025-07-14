@@ -1,5 +1,5 @@
 const express = require('express');
-const { Usuario } = require('../models/usuario');
+const Usuario = require('../models/usuario');
 
 async function getUsuarios(req, res) {
     try {
@@ -22,7 +22,7 @@ async function crearUsuario(req, res) {
 async function getUsuario(req, res) {
     const { correo } = req.params;
     try {
-        const usuario = await Usuario.findOne({ where: { correo } });
+        const usuario = await Usuario.findOne({ where: { USR_CRR: correo } });
         if (!usuario) {
             return res.status(404).json({ mensaje: `Usuario con correo ${correo} no encontrado` });
         }
@@ -35,8 +35,30 @@ async function getUsuario(req, res) {
     }
 }
 
+async function eliminarUsuario(req, res) {
+    const { correo } = req.params;
+
+    if (!correo) {
+        return res.status(400).json({ mensaje: "Falta el correo del usuario a eliminar" });
+    }
+
+    try {
+        const eliminado = await Usuario.destroy({ where: { USR_CRR: correo } });
+
+        if (eliminado === 0) {
+            return res.status(404).json({ mensaje: "Usuario no encontrado" });
+        }
+
+        return res.json({ mensaje: "Usuario eliminado correctamente" });
+    } catch (error) {
+        return res.status(500).json({ error: "Error al eliminar usuario", detalle: error.message });
+    }
+}
+
+
 module.exports = {
     getUsuarios,
     crearUsuario,
-    getUsuario
+    getUsuario,
+    eliminarUsuario
 };
