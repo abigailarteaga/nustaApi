@@ -115,10 +115,12 @@ async function verificarCodigo(req, res) {
 
 
 module.exports = {
-    getUsuarios,
-    crearUsuario,
-    getUsuario,
-    eliminarUsuario,
-    solicitarCodigo,
-    verificarCodigo,
-    };
+  getUsuarios,
+  crearUsuario,
+  getUsuario,
+  eliminarUsuario,
+  solicitarCodigo,
+  verificarCodigo,
+  editarUsuario  
+};
+

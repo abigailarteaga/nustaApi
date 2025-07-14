@@ -85,6 +85,44 @@ router.get('/:correo', usuarioController.getUsuario);
  *         description: Usuario no encontrado
  */
 router.delete('/:correo', usuarioController.eliminarUsuario);
+
+/**
+ * @swagger
+ * /api/usuario/{correo}:
+ *   put:
+ *     summary: Edita un usuario por correo
+ *     parameters:
+ *       - in: path
+ *         name: correo
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Correo actual del usuario
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nuevoCorreo:
+ *                 type: string
+ *                 example: nuevo@ejemplo.com
+ *               edad:
+ *                 type: integer
+ *                 example: 28
+ *               peso:
+ *                 type: number
+ *                 example: 65.5
+ *               altura:
+ *                 type: number
+ *                 example: 1.65
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado correctamente
+ *       404:
+ *         description: Usuario no encontrado
+ */
 router.put('/:correo', usuarioController.editarUsuario);
 
 
