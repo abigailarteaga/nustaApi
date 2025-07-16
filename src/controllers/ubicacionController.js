@@ -59,8 +59,8 @@ async function crear(req, res) {
             `📍 https://maps.google.com/?q=${latitud},${longitud}\n` +
             `📞 Contactos:\n📞 ${contactosTexto}`;
 
-        const token = process.env.TELEGRAM_BOT_TOKEN;
-        const chatId = process.env.TELEGRAM_CHAT_ID;
+        const token = "7553694650:AAF9qfNrDQhf8wI0SQ-9RJFG3GlhzqKYtX8";
+        const chatId = "-1002877609700";
 
         console.log("Token:", token);
         console.log("Chat ID:", chatId);
