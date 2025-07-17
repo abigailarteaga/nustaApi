@@ -59,8 +59,8 @@ async function crear(req, res) {
             `📍 https://maps.google.com/?q=${latitud},${longitud}\n` +
             `📞 Contactos:\n📞 ${contactosTexto}`;
 
-        const token = "7553694650:AAF9qfNrDQhf8wI0SQ-9RJFG3GlhzqKYtX8";
-        const chatId = "-1002877609700";
+        const token = process.env.TELEGRAM_BOT_TOKEN;
+        const chatId = process.env.TELEGRAM_CHAT_ID;
 
         if (!token || !chatId) {
             return res.status(500).json({ error: "Error: Configuración de Telegram no encontrada." });
