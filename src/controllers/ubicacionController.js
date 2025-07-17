@@ -66,6 +66,12 @@ async function crear(req, res) {
             return res.status(500).json({ error: "Error: Configuración de Telegram no encontrada." });
         }
 
+        console.log("Enviando a Telegram:");
+        console.log("Token:", token);
+        console.log("Chat ID:", chatId);
+        console.log("Mensaje:", mensaje);
+
+
         await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
             chat_id: chatId,
             text: mensaje
