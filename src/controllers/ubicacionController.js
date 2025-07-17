@@ -62,9 +62,6 @@ async function crear(req, res) {
         const token = "7553694650:AAF9qfNrDQhf8wI0SQ-9RJFG3GlhzqKYtX8";
         const chatId = "-1002877609700";
 
-        console.log("Token:", token);
-        console.log("Chat ID:", chatId);
-
         if (!token || !chatId) {
             return res.status(500).json({ error: "Error: Configuración de Telegram no encontrada." });
         }
